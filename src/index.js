@@ -63,7 +63,16 @@ try{
 }
 })
 
-
+app.post("/signin", async (req, res) => {
+  const { email, password } = req.body;
+  
+  const user = await users.findOne({ email });
+  if(user && bcrypt.compareSync(password, user.password)) {
+    res.send("sucesso")
+    } else {
+      res.send("erro")
+        }
+});
 
 app.listen(process.env.PORT, () =>
   console.log(`Server running in port: ${process.env.PORT}`)
