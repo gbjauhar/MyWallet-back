@@ -54,6 +54,15 @@ const signUpSchema = joi.object({
   res.sendStatus(201);
 });
 
+app.get("/signup", async (req, res) => {
+try{
+  const findUsers = await users.find().toArray()
+  res.send(findUsers)
+}catch(err){
+  res.sendStatus(500)
+}
+})
+
 
 
 app.listen(process.env.PORT, () =>
