@@ -160,7 +160,33 @@ app.post("/exit", async (req, res) => {
   }
 });
 
+app.get("/main", async (req, res) => {
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
 
+  if (!token) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const session = await sessions.findOne({ token });
+
+  if (!session) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const user = await users.findOne({
+    _id: session.userId,
+  });
+
+  if (user) {
+    const entry = await send.find().toArray();
+    res.send(entry)
+  } else {
+    res.sendStatus(401);
+  }
+});
 
 app.listen(process.env.PORT, () =>
   console.log(`Server running in port: ${process.env.PORT}`)
