@@ -1,9 +1,14 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import pkg from "mongodb";
-import router from "./routes.js";
-const { MongoClient, ObjectId } = pkg;
+import { MongoClient } from "mongodb"
+import loginRoute from "./routes/login.route.js";
+import signUpRoute from "./routes/signup.route.js";
+import homeRoute from "./routes/home.routes.js";
+import expenseRoute from "./routes/expense.route.js";
+import incomeRoute from "./routes/income.route.js";
+
+
 
 
 const app = express();
@@ -26,7 +31,11 @@ export const entries = db.collection("entries")
 
 
 
-app.use(router)
+app.use(loginRoute)
+app.use(signUpRoute)
+app.use(homeRoute)
+app.use(expenseRoute)
+app.use(incomeRoute)
 
 
 
