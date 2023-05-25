@@ -41,6 +41,18 @@ export async function deleteHome(req, res) {
     return res.status(200).send({ message: "Documento apagado com sucesso!" });
   } catch (err) {
     console.log(err);
-   return res.sendStatus(500)
+    return res.sendStatus(500)
+  }
+}
+
+export async function updateHome(req, res) {
+  const { id } = req.params;
+  const { cost, description } = req.body
+  try {
+    await entries.updateOne({ _id: ObjectId(id) }, { $set: {cost, description }})
+    return res.status(200).send({ message: "Documento atualizado com sucesso!" });
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500)
   }
 }
